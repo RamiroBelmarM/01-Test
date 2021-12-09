@@ -1,6 +1,9 @@
 # Chaos-01test
 Implementación del 01-test para detectar caos en series de tiempo.
+
 Esta implementación solo debe de usarse para datos sin ruido.
+
+Escrito en c++
 
 ```cpp
 #include "01-test.h"
