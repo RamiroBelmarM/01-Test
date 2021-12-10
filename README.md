@@ -1,4 +1,4 @@
-# Chaos-01test
+# 01 Test for Chaos detention in time series or deterministic systems
 Implementación del 01-test para detectar caos en series de tiempo.
 
 Esta implementación solo debe de usarse para datos sin ruido.
