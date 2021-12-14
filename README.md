@@ -6,8 +6,8 @@ Esta implementación solo debe de usarse para datos sin ruido.
 Para calcular el resultado del test, el algoritmo usa el metodo de 
 coeficiente de correlacion 
 
-k~1 - indicios de caos
-k~0 - no hay caos
+k=1 - indicios de caos
+k=0 - no hay caos
 
 ```cpp
 #include "01-test.h"
