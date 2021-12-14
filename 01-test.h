@@ -7,7 +7,7 @@
 #include <iostream>
 class test01{
     private:
-        double my_pi = 3.14159265358979323846;
+        const double my_pi = 3.14159265358979323846;
         std::vector <double> dat;
         std::vector <double> dat_sum;
         std::vector <double> qc_vector;
@@ -69,6 +69,26 @@ class test01{
                 std::cout<<pc_vector[i]<<'\t'<<qc_vector[i]<<std::endl;
             }
             return ;
+        }
+        void print_pcqc(){
+            srand(time(NULL));
+            make_sum();
+            make_new_coordinates();
+            for (size_t i=0; i<pc_vector.size(); ++i){
+                std::cout<<pc_vector[i]<<'\t'<<qc_vector[i]<<std::endl;
+            }
+            return ;
+        }
+        void clear(){
+            std::vector <double>().swap(dat);
+            std::vector <double>().swap( dat_sum);
+            std::vector <double>().swap( qc_vector);
+            std::vector <double>().swap( pc_vector);
+            std::vector <double>().swap( mc);
+            std::vector <double>().swap( kc);
+            std::vector <double>().swap( xi);
+            dt_=1.0;
+            N_=0.0;
         }
     private:
         double cast_d(unsigned int input){
