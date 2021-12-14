@@ -7,6 +7,7 @@ Para calcular el resultado del test, el algoritmo usa el metodo de
 coeficiente de correlacion 
 
 k=1 - indicios de caos
+
 k=0 - no hay caos
 
 ```cpp
