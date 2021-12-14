@@ -36,6 +36,12 @@ int main() {
     //en caso de que quieras imprimir solo las coordenadas pc qc
     //test.print_pcqc();
 
+    //pasando datos al argumento
+    //test.print_pcqc(dat);
+
+    //limpiar objeto test
+    //test.clear();
+
     return 0;
 }
 ```
