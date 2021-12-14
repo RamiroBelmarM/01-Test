@@ -3,7 +3,11 @@ Implementación del 01-test para detectar caos en series de tiempo.
 
 Esta implementación solo debe de usarse para datos sin ruido.
 
-Escrito en c++
+Para calcular el resultado del test, el algoritmo usa el metodo de 
+coeficiente de correlacion 
+
+k~1 - indicios de caos
+k~0 - no hay caos
 
 ```cpp
 #include "01-test.h"
@@ -21,7 +25,7 @@ int main() {
     //crea errores en el resultado del test
     //double dt=0.1; 
 
-    //usalo si tus no sabes el tiempo de muestreo
+    //usalo si no sabes el tiempo de muestreo
     test.init(dat);
 
     //usalo si sabes el tiempo de muestreo
