@@ -26,6 +26,7 @@ int main() {
     //si lo usas para sistemas dinamicos de tiempo continuo
     //debes de elegir bien dt, dt muy grande o pequeño
     //crea errores en el resultado del test
+    //ver referencia
     //double dt=0.1; 
 
     //usalo si no sabes el tiempo de muestreo
