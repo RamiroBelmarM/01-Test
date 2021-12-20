@@ -3,6 +3,8 @@ Implementación del 01-test para detectar caos en series de tiempo.
 
 Esta implementación solo debe de usarse para datos sin ruido.
 
+update - se añade soporte para datos con ruido, ver 01-test.h linea 115
+
 Para calcular el resultado del test, el algoritmo usa el metodo de 
 coeficiente de correlacion 
 
