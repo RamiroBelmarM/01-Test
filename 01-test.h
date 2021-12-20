@@ -33,7 +33,7 @@ class test01{
         }
         void make_test(){
             if (dat.size()<size_min){
-                std::cout<<"Error, los datos deben tener al menos 1000 observaciones"<<std::<<endl;
+                std::cout<<"Error, los datos deben tener al menos 1000 observaciones"<<std::endl;
                 kc_final_value=sqrt(-1.0);
                 return;
             }
@@ -111,7 +111,8 @@ class test01{
             double c_value= (cast_d(rand())/RAND_MAX )*my_pi*0.98+0.01;
             double theta;
             for (size_t i=0; i< dat.size(); ++i){
-                theta= cast_d(i+1)*c_value + dat_sum[i];
+                theta= cast_d(i+1)*c_value + dat_sum[i]; // para datos sin ruido
+                //theta= cast_d(i+1)*c_value // descomenta si tus datos tienen ruido
                 temp_pc+=dat[i]*cos(theta);
                 temp_qc+=dat[i]*sin(theta);
                 pc_vector.push_back(temp_pc);
