@@ -52,3 +52,11 @@ int main() {
     return 0;
 }
 ```
+
+# Referencia
+
+Gottwald, G. A., & Melbourne, I. (2004). A new test for chaos in deterministic systems. Proceedings of the Royal Society of London. Series A: Mathematical, Physical and Engineering Sciences, 460(2042), 603-611.
+
+Gottwald, G. A., & Melbourne, I. (2005). Testing for chaos in deterministic systems with noise. Physica D: Nonlinear Phenomena, 212(1-2), 100-110.
+
+Melosik, M., & Marszalek, W. (2016). On the 0/1 test for chaos in continuous systems. Bulletin of the Polish Academy of Sciences. Technical Sciences, 64(3).
