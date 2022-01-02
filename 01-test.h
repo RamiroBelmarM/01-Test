@@ -112,7 +112,7 @@ class test01{
             double theta;
             for (size_t i=0; i< dat.size(); ++i){
                 theta= cast_d(i+1)*c_value + dat_sum[i]; // para datos sin ruido
-                //theta= cast_d(i+1)*c_value // descomenta si tus datos tienen ruido
+                //theta= cast_d(i+1)*c_value; // descomenta si tus datos tienen ruido
                 temp_pc+=dat[i]*cos(theta);
                 temp_qc+=dat[i]*sin(theta);
                 pc_vector.push_back(temp_pc);
