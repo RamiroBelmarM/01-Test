@@ -13,7 +13,7 @@ int main(){
     r=3.78; //control parameter
     xn=0.7; //initial condition
     vector<double> dat;
-    for (int i=0; i<2000; ++i){
+    for (int i=0; i<3000; ++i){
         dat.push_back(get_logistic()); // get data from logistic map
     }
 
