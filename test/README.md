@@ -10,10 +10,10 @@ int main() {
     return 0;
 }
 ```
-# Dinámica en el espacio Pc-Qc del 01 test : caso caótico
+# Dinámica en el espacio Pc-Qc de una serie de tiempo caótico
 
 ![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_caos.png )
 
-# Dinámica en el espacio Pc-Qc del 01 test : caso no caótico
+# Dinámica en el espacio Pc-Qc de una serie de tiempo no caótico
 
 ![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_no_caos.png )
