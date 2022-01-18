@@ -5,7 +5,7 @@
 #include <time.h>
 #include <cmath>
 #include <iostream>
-class test01{
+class Test01{
     private:
         const double my_pi = 3.14159265358979323846;
         std::vector <double> dat;

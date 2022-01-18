@@ -1,7 +1,7 @@
 ```cpp
 #include "01-test.h"
 int main() {
-    test01 test;
+    Test01 test;
     test.init(dat);
     test.make_test();
     //double k=test.get_value();

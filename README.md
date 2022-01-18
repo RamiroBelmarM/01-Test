@@ -16,7 +16,7 @@ k=0 - no hay caos
 #include "01-test.h"
 int main() {
     //se crea el objeto test01
-    test01 test; 
+    Test01 test; 
 
     //datos bajo estudio
     //debe de tener al menos 1000 observaciones

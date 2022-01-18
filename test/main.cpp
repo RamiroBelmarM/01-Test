@@ -17,7 +17,7 @@ int main(){
         dat.push_back(get_logistic()); // get data from logistic map
     }
 
-    test01 test;
+    Test01 test;
     test.init(dat);
     test.make_test();
     double k=test.get_value();
