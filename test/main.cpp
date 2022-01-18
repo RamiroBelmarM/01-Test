@@ -10,7 +10,7 @@ double get_logistic(){
     return xn;
 }
 int main(){
-    r=3.78; //control parameter
+    r=3.0; //control parameter
     xn=0.7; //initial condition
     vector<double> dat;
     for (int i=0; i<3000; ++i){

@@ -13,3 +13,7 @@ int main() {
 # Dinámica en es espacio Pc-Qc del 01 test : caso caótico
 
 ![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_caos.png )
+
+# Dinámica en es espacio Pc-Qc del 01 test : caso no caótico
+
+![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_no_caos.png )
