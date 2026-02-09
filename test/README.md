@@ -12,8 +12,13 @@ int main() {
 ```
 # Dinámica en el espacio Pc-Qc de una serie de tiempo caótico
 
-![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_caos.png )
+![Alt text](./test_image_caos.png )
 
 # Dinámica en el espacio Pc-Qc de una serie de tiempo no caótico
 
-![Alt text](https://raw.githubusercontent.com/RamiroBelmarM/01-Test/main/test/test_image_no_caos.png )
+![Alt text](./test_image_no_caos.png )
+
+# Comparación raw vs raw + noise
+
+![Alt text](./test_image_raw_noise.png )
+$k_c \approx 1$ fuerte evidencia de caos
