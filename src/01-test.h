@@ -7,6 +7,7 @@
 #include <iostream>
 #include <random>
 #include <algorithm>
+#include <limits>
 class Test01{
     private:
         const double my_pi = 3.14159265358979323846;
@@ -18,10 +19,10 @@ class Test01{
         std::vector <double> kc;
         std::vector <double> xi;
         double kc_final_value; //valor final
-        double N_;
+        double MSD_cutoff; //
         unsigned int  mcIterations = 100; //numero de pruebas Monte Carlo
-        double dt_ = 0.1; //tiempo de muestreo 
-        int size_min=1000;
+        double deltaT = 0.1; //tiempo de muestreo 
+        int min_length=1000; //Tamaño mínimo de las muestras
         bool noise;
     public:
         void init(std::vector<double> input, bool flag){
@@ -32,23 +33,23 @@ class Test01{
         void init(std::vector<double> input, double dt, bool flag){
             std::vector<double>().swap(dat);
             dat=input;
-            dt_=dt;
+            deltaT=dt;
             noise=flag;
         }
         void make_test(){
-            if (dat.size()<size_min){
-                std::cout<<"Error, los datos deben tener al menos 1000 observaciones"<<std::endl;
-                kc_final_value=sqrt(-1.0);
+            if (dat.size()<min_length){
+                std::cerr<<"Error, los datos deben tener al menos 1000 observaciones"<<std::endl;
+                kc_final_value = std::numeric_limits<double>::quiet_NaN();
                 return;
             }
-            make_sum();
+            make_sum(); 
             std::vector<double>().swap(mc);
             std::vector<double>().swap(kc);
-            N_=cast_d(dat.size())/10.0;
+            MSD_cutoff=cast_d(dat.size())/10.0;
             make_xi();
             for (size_t i=0; i<mcIterations; ++i){ 
                 make_new_coordinates();
-                for (size_t j=0; j<N_; ++j){
+                for (size_t j=0; j<MSD_cutoff; ++j){
                     make_mc(j);
                 }
                 kc.push_back(make_kc());
@@ -87,8 +88,8 @@ class Test01{
             std::vector <double>().swap( mc);
             std::vector <double>().swap( kc);
             std::vector <double>().swap( xi);
-            dt_=1.0;
-            N_=0.0;
+            deltaT=1.0;
+            MSD_cutoff=0.0;
         }
     private:
         double cast_d(unsigned int input){
@@ -139,12 +140,12 @@ class Test01{
                 temp+=(temp_pc*temp_pc + temp_qc*temp_qc );
             }
             temp/=cast_d(dat.size()-tope);
-            mc.push_back(temp*dt_*dt_);
+            mc.push_back(temp*deltaT*deltaT);
             return;
         }
         void make_xi(){
             std::vector <double>().swap(xi);
-            for (size_t i=0; i<N_ ; ++i){
+            for (size_t i=0; i<MSD_cutoff ; ++i){
                 xi.push_back( cast_d( i+1));
             }
             return ;
