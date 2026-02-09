@@ -1,45 +1,46 @@
-# 01 Test for Chaos detention in time series or deterministic systems
+# 01-Test for Chaos Detection in Time Series (Noisy or Noise-Free)
 Implementación del 01-test para detectar caos en series de tiempo.
 
-Esta implementación solo debe de usarse para datos sin ruido.
+~~Esta implementación solo debe de usarse para datos sin ruido.~~
 
-update - se añade soporte para datos con ruido, ver 01-test.h linea 115
+Update - se añade soporte para datos con ruido y se mejora los números aleatorios usados para la prueba de Monte Carlo.
 
-Para calcular el resultado del test, el algoritmo usa el metodo de 
-coeficiente de correlacion 
+Para calcular el resultado final del test, el algoritmo usa el método de  coeficiente de correlación (ver referencias).
 
-k=1 - indicios de caos
+$K_c \approx 1$ - indicios de caos - signs of chaotic behavior
 
-k=0 - no hay caos
+$K_c \approx 0$ - no hay caos - absence of chaos
 
 ```cpp
 #include "01-test.h"
-int main() {
-    //se crea el objeto test01
-    Test01 test; 
+int main() { 
 
     //datos bajo estudio
     //debe de tener al menos 1000 observaciones
-    std::vector<double> dat;     
+    std::vector<double> dat;
+    double kc;   
+    
+    //se crea el objeto test01
+    Test01 test;
 
     //tiempo de muestreo
-    //si lo usas para sistemas dinamicos de tiempo continuo
+    //si lo usas para sistemas dinámicos de tiempo continuo
     //debes de elegir bien dt, dt muy grande o pequeño
     //crea errores en el resultado del test
-    //ver referencia
-    //double dt=0.1; 
 
-    //usalo si no sabes el tiempo de muestreo
-    test.init(dat);
+    //úsalo si no sabes el tiempo de muestreo 
+    //y si tus datos NO tienen ruido
+    test.init(dat,false);
+    //para datos con ruido cambia 'false' a 'true'
 
-    //usalo si sabes el tiempo de muestreo
-    //test.init(dat,dt);
+    //úsalo si sabes el tiempo de muestreo
+    //test.init(dat,dt,false);
 
     //inicia el test
     test.make_test();
 
-    //obten el resultado
-    test.get_value();
+    //obtén el resultado
+    kc=test.get_value();
 
     //en caso de que quieras imprimir solo las coordenadas pc qc
     //test.print_pcqc();
@@ -48,7 +49,7 @@ int main() {
     //test.print_pcqc(dat);
 
     //limpiar objeto test
-    //test.clear();
+    test.clear();
 
     return 0;
 }

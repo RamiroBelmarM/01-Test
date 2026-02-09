@@ -5,6 +5,8 @@
 #include <time.h>
 #include <cmath>
 #include <iostream>
+#include <random>
+#include <algorithm>
 class Test01{
     private:
         const double my_pi = 3.14159265358979323846;
@@ -17,19 +19,21 @@ class Test01{
         std::vector <double> xi;
         double kc_final_value; //valor final
         double N_;
-        double c_top=100; //numero de pruebas
-        double dt_; //tiempo de muestreo 
+        unsigned int  mcIterations = 100; //numero de pruebas Monte Carlo
+        double dt_ = 0.1; //tiempo de muestreo 
         int size_min=1000;
+        bool noise;
     public:
-        void init(std::vector<double> input){
+        void init(std::vector<double> input, bool flag){
             std::vector<double>().swap(dat);
             dat=input;
-            dt_=1.0;
+            noise=flag;
         }
-        void init(std::vector<double> input, double dt){
+        void init(std::vector<double> input, double dt, bool flag){
             std::vector<double>().swap(dat);
             dat=input;
             dt_=dt;
+            noise=flag;
         }
         void make_test(){
             if (dat.size()<size_min){
@@ -38,12 +42,11 @@ class Test01{
                 return;
             }
             make_sum();
-            srand(time(NULL));
             std::vector<double>().swap(mc);
             std::vector<double>().swap(kc);
             N_=cast_d(dat.size())/10.0;
             make_xi();
-            for (size_t i=0; i<c_top; ++i){ 
+            for (size_t i=0; i<mcIterations; ++i){ 
                 make_new_coordinates();
                 for (size_t j=0; j<N_; ++j){
                     make_mc(j);
@@ -51,8 +54,7 @@ class Test01{
                 kc.push_back(make_kc());
                 std::vector<double>().swap(mc);
             }
-            quicksort(&kc[0],kc.size());
-            kc_final_value=kc[c_top/2];
+            kc_final_value=get_kc_median();
             std::vector<double>().swap(kc);
             return ;
         }
@@ -61,7 +63,6 @@ class Test01{
         }
         void print_pcqc(std::vector<double> input){
             std::vector<double>().swap(dat);
-            srand(time(NULL));
             dat=input;
             make_sum();
             make_new_coordinates();
@@ -71,7 +72,6 @@ class Test01{
             return ;
         }
         void print_pcqc(){
-            srand(time(NULL));
             make_sum();
             make_new_coordinates();
             for (size_t i=0; i<pc_vector.size(); ++i){
@@ -94,6 +94,11 @@ class Test01{
         double cast_d(unsigned int input){
             return static_cast<double>(input);
         }
+        double get_random01() {
+            static std::mt19937 gen(std::random_device{}());
+            static std::uniform_real_distribution<double> dist(0.0, 1.0);
+            return dist(gen);
+        }
         void make_sum(){
             double temp=0.0;
             std::vector<double>().swap(dat_sum);
@@ -108,11 +113,15 @@ class Test01{
             std::vector<double>().swap(qc_vector);
             double temp_pc=0.0;
             double temp_qc=0.0;
-            double c_value= (cast_d(rand())/RAND_MAX )*my_pi*0.98+0.01;
+            double c_value= get_random01()*my_pi*0.98+0.01;
             double theta;
             for (size_t i=0; i< dat.size(); ++i){
-                theta= cast_d(i+1)*c_value + dat_sum[i]; // para datos sin ruido
-                //theta= cast_d(i+1)*c_value; // descomenta si tus datos tienen ruido
+                if (noise){
+                    theta= cast_d(i+1)*c_value; 
+                }
+                else{
+                    theta= cast_d(i+1)*c_value + dat_sum[i];
+                }
                 temp_pc+=dat[i]*cos(theta);
                 temp_qc+=dat[i]*sin(theta);
                 pc_vector.push_back(temp_pc);
@@ -165,30 +174,15 @@ class Test01{
             kc_val/=sqrt( var_vector(mc,mc_mean)*var_vector(xi,xi_mean));
             return kc_val;
         }
-        //quicksort
-        //codigo de Stack Overflow
-        void quicksort(double a[], int n) {
-            if (n <= 1) return;
-            double p = a[n/2];
-            double b[n], c[n];
-            int i, j = 0, k = 0;
-            for (i=0; i < n; i++) {
-                if (i == n/2) 
-                    continue;
-                if ( a[i] <= p) 
-                    b[j++] = a[i];
-                else            
-                    c[k++] = a[i];
+        double get_kc_median() {
+            std::sort(kc.begin(), kc.end());
+
+            if (mcIterations % 2 == 1) {
+                return kc[mcIterations / 2];
+            } else {
+                return (kc[mcIterations / 2 - 1] + kc[mcIterations / 2]) / 2.0;
             }
-            quicksort(b,j);
-            quicksort(c,k);
-            for (i=0; i<j; i++) 
-                a[i] =b[i];
-            a[j] = p;
-            for (i= 0; i<k; i++) 
-                a[j+1+i] =c[i]; 
-            return ;
-        } 
+        }
 
 };
 #endif
