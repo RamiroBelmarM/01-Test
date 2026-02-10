@@ -8,6 +8,8 @@
 #include <random>
 #include <algorithm>
 #include <limits>
+#include <vector>
+#include <stdexcept>
 class Test01{
     private:
         const double my_pi = 3.14159265358979323846;
@@ -62,7 +64,7 @@ class Test01{
         double get_value(){
             return kc_final_value;
         }
-        void print_pcqc(std::vector<double> input){
+        void print_pcqc(std::vector<double>& input){
             std::vector<double>().swap(dat);
             dat=input;
             make_sum();
@@ -150,22 +152,28 @@ class Test01{
             }
             return ;
         }
-        double mean_vector(std::vector<double> input){
-            double sum=0.0;
-            for (size_t i=0; i< input.size(); ++i){
-                sum+=input[i];
+        double mean_vector(const std::vector<double>& input) {
+            if (input.empty()) {
+                throw std::invalid_argument("Vector vacío");
             }
-            return sum/cast_d(input.size());
-        }
-        double cov_vector(std::vector <double > left, double left_mean, std::vector<double> right, double right_mean){
-            double cov=0.0;
-            for (size_t i=0; i< left.size(); ++i){
-                cov+=((left[i]-left_mean)*(right[i]-right_mean) );
+            double sum = 0.0;
+            for (double x : input) {
+                sum += x;
             }
-            return cov/cast_d(left.size());
+            return sum / cast_d(input.size());
         }
-        double var_vector(std::vector <double> input, double mean  ){
-            return cov_vector(input, mean, input, mean );
+        double cov_vector(const std::vector<double>& left, double left_mean, const std::vector<double>& right, double right_mean) {
+            if (left.size() != right.size() || left.empty()) {
+                throw std::invalid_argument("Vectores inválidos");
+            }
+            double cov = 0.0;
+            for (size_t i = 0; i < left.size(); ++i) {
+                cov += (left[i] - left_mean) * (right[i] - right_mean);
+            }
+            return cov / cast_d(left.size());
+        }
+        double var_vector(const std::vector<double>& input, double mean) {
+            return cov_vector(input, mean, input, mean);
         }
         double make_kc(){
             double kc_val;
@@ -177,7 +185,6 @@ class Test01{
         }
         double get_kc_median() {
             std::sort(kc.begin(), kc.end());
-
             if (mcIterations % 2 == 1) {
                 return kc[mcIterations / 2];
             } else {
