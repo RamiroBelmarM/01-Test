@@ -1,9 +1,5 @@
-#include <iostream>
 #include <fstream>
-#include <vector>
 #include "./../src/01-test.h"
-
-using namespace std;
 
 double get_logistic(double r, double xn){
     xn=xn*r*(1.0-xn);
