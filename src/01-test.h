@@ -20,12 +20,12 @@ class Test01{
         std::vector <double> mc;
         std::vector <double> kc;
         std::vector <double> xi;
-        double kc_final_value; //valor final
-        double MSD_cutoff; //
+        double kc_final_value; //Valor final
+        double MSD_cutoff; // Cutoff del Desplazamiento Cuadrático Medio
         unsigned int  mcIterations = 100; //numero de pruebas Monte Carlo
-        double deltaT = 0.1; //tiempo de muestreo 
-        int min_length=1000; //Tamaño mínimo de las muestras
-        bool noise;
+        double deltaT = 1.0; //tiempo de muestreo 
+        int min_length=1000; //Tamaño mínimo de las muestras según el paper [2]
+        bool noise=false;
     public:
         void init(std::vector<double> input, bool flag){
             std::vector<double>().swap(dat);
@@ -44,7 +44,9 @@ class Test01{
                 kc_final_value = std::numeric_limits<double>::quiet_NaN();
                 return;
             }
-            make_sum(); 
+            if (!noise){
+                make_sum();
+            } 
             std::vector<double>().swap(mc);
             std::vector<double>().swap(kc);
             MSD_cutoff=cast_d(dat.size())/10.0;
@@ -58,24 +60,27 @@ class Test01{
                 std::vector<double>().swap(mc);
             }
             kc_final_value=get_kc_median();
-            std::vector<double>().swap(kc);
             return ;
         }
         double get_value(){
             return kc_final_value;
         }
-        void print_pcqc(std::vector<double>& input){
+        void print_pcqc(std::vector<double>& input, bool flag){
             std::vector<double>().swap(dat);
             dat=input;
-            make_sum();
+            if (noise){
+                make_sum();
+            }
             make_new_coordinates();
             for (size_t i=0; i<pc_vector.size(); ++i){
                 std::cout<<pc_vector[i]<<'\t'<<qc_vector[i]<<std::endl;
             }
-            return ;
+            return;
         }
         void print_pcqc(){
-            make_sum();
+            if (!noise){
+                make_sum();
+            }
             make_new_coordinates();
             for (size_t i=0; i<pc_vector.size(); ++i){
                 std::cout<<pc_vector[i]<<'\t'<<qc_vector[i]<<std::endl;
@@ -83,15 +88,13 @@ class Test01{
             return ;
         }
         void clear(){
-            std::vector <double>().swap(dat);
-            std::vector <double>().swap( dat_sum);
-            std::vector <double>().swap( qc_vector);
-            std::vector <double>().swap( pc_vector);
-            std::vector <double>().swap( mc);
-            std::vector <double>().swap( kc);
-            std::vector <double>().swap( xi);
-            deltaT=1.0;
-            MSD_cutoff=0.0;
+            std::vector <double>().swap( dat        );
+            std::vector <double>().swap( dat_sum    );
+            std::vector <double>().swap( qc_vector  );
+            std::vector <double>().swap( pc_vector  );
+            std::vector <double>().swap( mc         );
+            std::vector <double>().swap( kc         );
+            std::vector <double>().swap( xi         );
         }
     private:
         double cast_d(unsigned int input){
